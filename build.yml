@@ -1,0 +1,27 @@
+name: Build IQ Bot EXE
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['gui.py', 'strategy.py', 'config.py', '.github/workflows/build.yml']
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install deps
+        run: |
+          pip install pyinstaller
+          pip install git+https://github.com/victalejo/iqoptionapi.git
+          pip install websocket-client==0.56
+      - name: Build EXE
+        run: |
+          pyinstaller --onefile --windowed --name HamzaIQBot gui.py
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: HamzaIQBot-exe
+          path: dist/HamzaIQBot.exe

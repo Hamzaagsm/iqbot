@@ -1,0 +1,4 @@
+# Unofficial IQ Option API (community maintained)
+git+https://github.com/victalejo/iqoptionapi.git
+# WebSocket client version the library expects
+websocket-client==0.56
